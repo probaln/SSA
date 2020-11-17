@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    recipients.argocd-notifications.argoproj.io: webhook:wsi-test
+  creationTimestamp: null
+  labels:
+    app: webserver
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webserver
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - image: index.docker.io/johndavidmarx/gitops:webserver1.14
+        name: webserver
+        imagePullPolicy: Always
+---

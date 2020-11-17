@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webserver
+  namespace: default
+  annotations:
+    recipients.argocd-notifications.argoproj.io: webhook:whpost
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/johnmarx-la/SSA.git
+    targetRevision: HEAD
+    path: webserver
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
