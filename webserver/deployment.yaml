@@ -18,7 +18,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: webserver
+        app: kubernetes-bootcamp
     spec:
       containers:
       - image: gcr.io/kubernetes-bootcamp:v1
