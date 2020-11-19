@@ -4,12 +4,12 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: webserver
-  name: webserver
+    app: kubernetes-bootcamp
+  name: kubernetes-bootcamp
 spec:
   ports:
-  - port: 8081
+  - port: 8080
     protocol: TCP
   selector:
-    app: webserver
+    app: kubernetes-bootcamp
 ---

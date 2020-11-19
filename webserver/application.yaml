@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/johnmarx-la/SSA.git
+    repoURL: https://github.com/probaln/SSA.git
     targetRevision: HEAD
     path: webserver
   destination:

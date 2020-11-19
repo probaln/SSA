@@ -6,13 +6,13 @@ metadata:
     recipients.argocd-notifications.argoproj.io: webhook:wsi-test
   creationTimestamp: null
   labels:
-    app: webserver
-  name: webserver
+    app: kubernetes-bootcamp
+  name: kubernetes-bootcamp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webserver
+      app: kubernetes-bootcamp
   strategy: {}
   template:
     metadata:
@@ -21,7 +21,7 @@ spec:
         app: webserver
     spec:
       containers:
-      - image: index.docker.io/johndavidmarx/gitops:webserver1.14
+      - image: gcr.io/kubernetes-bootcamp:v1
         name: webserver
         imagePullPolicy: Always
 ---
