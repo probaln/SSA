@@ -1,0 +1,67 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: steps-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: test-dependency-dag
+  templates:
+  - name: test-book
+    inputs:
+      parameters:
+      - name: test_script_name
+      - name: cluster_url
+    container: 
+      image: docker.io/probaln/test-bookapp:v2
+      command: ["sh"]
+      args: ["{{inputs.parameters.test_script_name}}", "{{inputs.parameters.cluster_url}}"]
+
+  - name: test-dependency-dag
+    # Instead of just running a container, this template runs a seq of containers
+    dag:
+      tasks:
+      - name: step1
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-initialization.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+      - name: step2
+        dependencies: [step1]
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-add.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+      - name: step3
+        dependencies: [step2]
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-update.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+      - name: step4
+        dependencies: [step2]
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-fail.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+      - name: step5
+        dependencies: [step3, step4]
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-delete.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080

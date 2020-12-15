@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: param-book-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: test-book
+  arguments:
+    parameters:
+    - name: test_script_name 
+      value: integ-test/test-initialization.sh
+    - name:  cluster_url
+      value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+
+  templates:
+  - name: test-book
+    inputs:
+      parameters:
+      - name: test_script_name
+      - name: cluster_url
+    container: 
+      image: docker.io/probaln/test-bookapp:v1
+      command: ["sh"]
+      args: ["{{inputs.parameters.test_script_name}}", "{{inputs.parameters.cluster_url}}"]
+

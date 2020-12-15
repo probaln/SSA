@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-book-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: test-book
+  templates:
+  - name: test-book
+    container: 
+      image: docker.io/probaln/test-bookapp:v1
+      command: ["sh"]
+      args: ["integ-test/test-initialization.sh","http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080"]
