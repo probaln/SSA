@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookapp-deployment
+  labels:
+    app: bookapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookapp
+  template:
+    metadata:
+      labels:
+        app: bookapp
+    spec:
+      containers:
+      - name: bookapp
+        image: docker.io/probaln/bookapp:v1
+        imagePullPolicy: Always
+---

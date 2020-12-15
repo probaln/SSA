@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookapp
+  namespace: default
+  annotations:
+    recipients.argocd-notifications.argoproj.io: webhook:whpost
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/probaln/SSA.git
+    targetRevision: HEAD
+    path: argodemo/deploy/restful-app/manifest
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
