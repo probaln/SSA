@@ -1,0 +1,1 @@
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ "authors": [  { "firstName": "Probal",  "lastName": "Nandy"  }  ],  "description": "My Java 11 book",  "isbn": "123-1234567890",  "publisher": "Addison",  "title": "My Java Book"  }' 'http://localhost:8080/api/books'

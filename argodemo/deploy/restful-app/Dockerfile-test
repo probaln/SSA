@@ -1,0 +1,10 @@
+FROM openjdk:11.0.9.1-jdk-slim
+RUN apt-get update
+RUN apt-get install -y curl jq 
+RUN groupadd -r argogrp && useradd -r -g argogrp argousr 
+RUN mkdir -p /home/argousr/bookapp/integ-test
+RUN chown argousr /home/argousr
+RUN chgrp argogrp /home/argousr
+USER argousr:argogrp
+WORKDIR /home/argousr/bookapp
+COPY integ-test/*.sh /home/argousr/bookapp/integ-test/

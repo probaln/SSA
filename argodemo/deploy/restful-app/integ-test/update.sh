@@ -1,0 +1,1 @@
+curl -X PUT --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  "authors": [  {  "firstName": "John",  "lastName": "Doe"  } ],  "description": "new desc",  "isbn": "123-1234567890",  "publisher": "new publisher", "title": "new title" }' 'http://localhost:8080/api/books/123-1234567890'
