@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: bookapp
-  namespace: default
+  namespace: probal
   annotations:
     recipients.argocd-notifications.argoproj.io: webhook:whpost
 spec:
@@ -13,5 +13,5 @@ spec:
     path: argodemo/deploy/restful-app/manifest
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: probal
 
