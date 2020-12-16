@@ -9,6 +9,6 @@ spec:
   templates:
   - name: test-book
     container: 
-      image: docker.io/probaln/test-bookapp:v1
+      image: docker.io/probaln/test-bookapp:v3
       command: ["sh"]
       args: ["integ-test/test-initialization.sh","http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080"]
