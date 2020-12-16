@@ -21,7 +21,7 @@ spec:
     # Instead of just running a container, this template runs a seq of containers
     dag:
       tasks:
-      - name: step1
+      - name: Initialization
         template: test-book
         arguments:
           parameters:
@@ -29,8 +29,8 @@ spec:
             value: integ-test/test-initialization.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-      - name: step2
-        dependencies: [step1]
+      - name: AddABook
+        dependencies: [Initialization]
         template: test-book
         arguments:
           parameters:
@@ -38,8 +38,8 @@ spec:
             value: integ-test/test-add.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-      - name: step3
-        dependencies: [step2]
+      - name: UpdateABook
+        dependencies: [AddABook]
         template: test-book
         arguments:
           parameters:
@@ -47,8 +47,8 @@ spec:
             value: integ-test/test-update.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-      - name: step4
-        dependencies: [step2]
+      - name: AlwaysFail 
+        dependencies: [AddABook]
         template: test-book
         arguments:
           parameters:
@@ -56,8 +56,8 @@ spec:
             value: integ-test/test-fail.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-      - name: step5
-        dependencies: [step3, step4]
+      - name: DeleteBook
+        dependencies: [UpdateABook, AlwaysFail]
         template: test-book
         arguments:
           parameters:

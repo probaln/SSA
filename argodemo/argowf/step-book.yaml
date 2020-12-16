@@ -11,7 +11,7 @@ spec:
   - name: test-three-steps
     # Instead of just running a container, this template runs a seq of containers
     steps:
-    - - name: step1
+    - - name: Initialization
         template: test-book
         arguments:
           parameters:
@@ -19,7 +19,7 @@ spec:
             value: integ-test/test-initialization.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-    - - name: step2
+    - - name: AddBook
         template: test-book
         arguments:
           parameters:
@@ -27,7 +27,7 @@ spec:
             value: integ-test/test-add.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-    - - name: step3
+    - - name: UpdateBook
         template: test-book
         arguments:
           parameters:
@@ -35,7 +35,7 @@ spec:
             value: integ-test/test-update.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-    - - name: step4
+    - - name: PatchBook
         template: test-book
         arguments:
           parameters:
@@ -43,7 +43,7 @@ spec:
             value: integ-test/test-patch.sh 
           - name: cluster_url
             value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
-    - - name: step5
+    - - name: DeleteBook
         template: test-book
         arguments:
           parameters:
