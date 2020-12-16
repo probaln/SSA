@@ -18,7 +18,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-initialization.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: AddABook
         template: test-book
         arguments:
@@ -26,7 +26,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-add.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: AlwaysFailStep
         template: test-book
         arguments:
@@ -34,7 +34,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-fail.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
         template: test-book
         arguments:
@@ -42,7 +42,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-patch.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: DeleteABook
         template: test-book
         arguments:
@@ -50,7 +50,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-delete.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
 
   - name: test-book
     inputs:

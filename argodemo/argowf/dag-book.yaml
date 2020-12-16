@@ -28,7 +28,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-initialization.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
       - name: AddABook
         dependencies: [Initialization]
         template: test-book
@@ -37,7 +37,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-add.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
       - name: UpdateBookJustAdded
         dependencies: [AddABook]
         template: test-book
@@ -46,7 +46,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-update.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
       - name: PatchBookJustAdded
         dependencies: [AddABook]
         template: test-book
@@ -55,7 +55,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-patch.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
       - name: DeleteBook
         dependencies: [UpdateBookJustAdded, PatchBookJustAdded]
         template: test-book
@@ -64,4 +64,4 @@ spec:
           - name:  test_script_name
             value: integ-test/test-delete.sh 
           - name: cluster_url
-            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
