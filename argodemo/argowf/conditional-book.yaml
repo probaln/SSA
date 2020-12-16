@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: conditional-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: test-three-steps
+
+  templates:
+  - name: test-conditional-steps
+    # Instead of just running a container, this template runs a seq of containers
+    steps:
+    - - name: ReturnIsbn
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-return.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+    - - name: GotIsbn
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-delete.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+        when: "{{steps.ReturnIsbn.outputs.result}} == 123-1234567890"
+      - name: error
+        template: error
+        when: "{{steps.ReturnIsbn.outputs.result}} != 123-1234567890"
+
+    - - name: DeleteBook
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-delete.sh 
+          - name: cluster_url
+            value: http://a7de8580312b64cb6bffd1575d7a1697-638380000.us-east-2.elb.amazonaws.com:8080
+
+  - name: test-book
+    inputs:
+      parameters:
+      - name: test_script_name
+      - name: cluster_url
+    container: 
+      image: docker.io/probaln/test-bookapp:v4
+      command: ["sh"]
+      args: ["{{inputs.parameters.test_script_name}}", "{{inputs.parameters.cluster_url}}"]
+  - name: error
+    container:
+      image: alpine:3.6
+      command: [sh, -c]
+      args: ["echo \"it was not expected\""]
+
+
