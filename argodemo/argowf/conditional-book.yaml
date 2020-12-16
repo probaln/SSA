@@ -5,7 +5,7 @@ metadata:
   labels:
     workflows.argoproj.io/archive-strategy: "false"
 spec:
-  entrypoint: test-three-steps
+  entrypoint: test-conditional-steps
 
   templates:
   - name: test-conditional-steps
