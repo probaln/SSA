@@ -130,4 +130,22 @@ spec:
         command: ["sleep", "10"]
       restartPolicy: Never
   backoffLimit: 0
-
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-book-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  entrypoint: test-book
+  templates:
+  - name: test-book
+    container: 
+      image: docker.io/probaln/test-bookapp:v3
+      command: ["sh"]
+      args: ["integ-test/test-initialization.sh","http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080"]
