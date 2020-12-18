@@ -85,7 +85,7 @@ spec:
         arguments:
           parameters:
           - name:  test_script_name
-            value: integ-test/test-fail.sh 
+            value: integ-test/test-update.sh 
           - name: cluster_url
             value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
