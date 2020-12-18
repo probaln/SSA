@@ -1,0 +1,117 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: upgrade-sql-schema
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  template:
+    spec:
+      containers:
+        - name: upgrade-sql-schema
+          image: alpine:latest
+          command: ["sleep", "5"]
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: maint-page-up
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  template:
+    spec:
+      containers:
+        - name: page-up
+          image: alpine:latest
+          command: ["sleep", "2"]
+      restartPolicy: Never
+  backoffLimit: 0
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: maint-page-down
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  template:
+    spec:
+      containers:
+        - name: page-down
+          image: alpine:latest
+          command: ["sleep", "2"]
+      restartPolicy: Never
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: fail-
+  namespace: argo
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  entrypoint: test-fail-steps
+
+  templates:
+  - name: test-fail-steps
+    # Instead of just running a container, this template runs a seq of containers
+    steps:
+    - - name: Initialization
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-initialization.sh 
+          - name: cluster_url
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+    - - name: AddABook
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-add.sh 
+          - name: cluster_url
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+    - - name: AlwaysFailStep
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-fail.sh 
+          - name: cluster_url
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+    - - name: UpdateBook
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-patch.sh 
+          - name: cluster_url
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+    - - name: DeleteABook
+        template: test-book
+        arguments:
+          parameters:
+          - name:  test_script_name
+            value: integ-test/test-delete.sh 
+          - name: cluster_url
+            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+
+  - name: test-book
+    inputs:
+      parameters:
+      - name: test_script_name
+      - name: cluster_url
+    container: 
+      image: docker.io/probaln/test-bookapp:v3
+      command: ["sh"]
+      args: ["{{inputs.parameters.test_script_name}}", "{{inputs.parameters.cluster_url}}"]
+
