@@ -112,4 +112,21 @@ spec:
           image: alpine:latest
           command: ["sleep", "2"]
       restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: post-sync-job
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  template:
+    spec:
+      containers:
+        - name: post-sync
+          image: alpine:latest
+          command: ["sleep", "2"]
+      restartPolicy: Never
+  backoffLimit: 0
 
