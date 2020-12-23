@@ -50,35 +50,35 @@ spec:
     port: 8080
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: backend
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      tier: backend
-  template:
-    metadata:
-      labels:
-        tier: backend
-    spec:
-      containers:
-        - name: main
-          image: nginx:latest
+#apiVersion: apps/v1
+#kind: ReplicaSet
+#metadata:
+#  name: backend
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      tier: backend
+#  template:
+#    metadata:
+#      labels:
+#        tier: backend
+#    spec:
+#      containers:
+#        - name: main
+#          image: nginx:latest
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-spec:
-  selector:
-    tier: backend
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: backend
+#spec:
+#  selector:
+#    tier: backend
+#  ports:
+#    - protocol: TCP
+#      port: 8080
+#      targetPort: 8080
 ---
 apiVersion: batch/v1
 kind: Job
@@ -98,39 +98,39 @@ spec:
       restartPolicy: Never
   backoffLimit: 0
 ---
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: frontend
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      tier: frontend
-  template:
-    metadata:
-      labels:
-        tier: frontend
-    spec:
-      containers:
-        - name: main
-          image: nginx:latest
+#apiVersion: apps/v1
+#kind: ReplicaSet
+#metadata:
+#  name: frontend
+#  annotations:
+#    argocd.argoproj.io/sync-wave: "2"
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      tier: frontend
+#  template:
+#    metadata:
+#      labels:
+#        tier: frontend
+#    spec:
+#      containers:
+#        - name: main
+#          image: nginx:latest
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  selector:
-    tier: frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: frontend
+#  annotations:
+#    argocd.argoproj.io/sync-wave: "2"
+#spec:
+#  selector:
+#    tier: frontend
+#  ports:
+#    - protocol: TCP
+#      port: 80
+#      targetPort: 80
 ---
 apiVersion: batch/v1
 kind: Job
@@ -155,6 +155,7 @@ metadata:
   name: post-sync-job
   annotations:
     argocd.argoproj.io/hook: PostSync
+#   argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-wave: "4"
 spec:
   template:
@@ -219,7 +220,7 @@ spec:
         arguments:
           parameters:
           - name:  test_script_name
-            value: integ-test/test-fail.sh 
+            value: integ-test/test-update.sh 
           - name: cluster_url
             value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
