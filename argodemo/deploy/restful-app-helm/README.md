@@ -14,3 +14,14 @@ helm uninstall restful-app-helm
 
 # To update
 helm upgrade restful-app-helm .
+
+# Checkout http://argoproj.github.io/argo-cd/user-guide/commands/argocd and
+# http://argoproj.github.io/argo-cd/user-guide/commands/argocd_app 
+
+# Login to argocd command line
+argocd login  <a6fb1cb20d4a94e7988f64de632fea02-1229217818.us-east-2.elb.amazonaws.com> --username <admin> --password <askme>
+
+# Now create the app using CLI
+argocd app create restful-app-helm --repo https://github.com/probaln/SSA.git --path argodemo/deploy/restful-app-helm --dest-namespace default --dest-server https://kubernetes.default.svc --helm-set replicaCount=2
+
+
