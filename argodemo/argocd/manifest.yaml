@@ -182,7 +182,7 @@ spec:
     container: 
       image: docker.io/probaln/test-bookapp:v3
       command: ["sh"]
-      args: ["integ-test/test-initialization.sh","http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080"]
+      args: ["integ-test/test-initialization.sh","http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080"]
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
@@ -206,7 +206,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-initialization.sh 
           - name: cluster_url
-            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+            value: http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080
     - - name: AddABook
         template: test-book
         arguments:
@@ -214,7 +214,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-add.sh 
           - name: cluster_url
-            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+            value: http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080
     - - name: AlwaysFailStep
         template: test-book
         arguments:
@@ -222,7 +222,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-update.sh 
           - name: cluster_url
-            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+            value: http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
         template: test-book
         arguments:
@@ -230,7 +230,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-patch.sh 
           - name: cluster_url
-            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+            value: http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080
     - - name: DeleteABook
         template: test-book
         arguments:
@@ -238,7 +238,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-delete.sh 
           - name: cluster_url
-            value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
+            value: http://a02a0afac49b5423184b755c9ae88e4d-801578416.us-east-2.elb.amazonaws.com:8080
 
   - name: test-book
     inputs:
