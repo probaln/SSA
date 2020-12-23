@@ -14,36 +14,6 @@ spec:
           command: ["sleep", "5"]
       restartPolicy: Never
 ---
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: backend
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      tier: backend
-  template:
-    metadata:
-      labels:
-        tier: backend
-    spec:
-      containers:
-        - name: main
-          image: nginx:latest
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-spec:
-  selector:
-    tier: backend
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -62,40 +32,6 @@ spec:
       restartPolicy: Never
   backoffLimit: 0
 ---
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: frontend
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      tier: frontend
-  template:
-    metadata:
-      labels:
-        tier: frontend
-    spec:
-      containers:
-        - name: main
-          image: nginx:latest
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  selector:
-    tier: frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -112,40 +48,6 @@ spec:
           image: alpine:latest
           command: ["sleep", "2"]
       restartPolicy: Never
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: post-sync-job
-  annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/sync-wave: "4"
-spec:
-  template:
-    spec:
-      containers:
-        - name: post-sync
-          image: alpine:latest
-          command: ["sleep", "2"]
-      restartPolicy: Never
-  backoffLimit: 0
----
-apiVersion: argoproj.io/v1alpha1
-kind: Workflow
-metadata:
-  generateName: hello-book-
-  namespace: argo
-  annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/sync-wave: "5"
-spec:
-  entrypoint: test-book
-  templates:
-  - name: test-book
-    container: 
-      image: docker.io/probaln/test-bookapp:v3
-      command: ["sh"]
-      args: ["integ-test/test-initialization.sh","http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080"]
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
@@ -183,7 +85,7 @@ spec:
         arguments:
           parameters:
           - name:  test_script_name
-            value: integ-test/test-fail.sh 
+            value: integ-test/test-update.sh 
           - name: cluster_url
             value: http://a4a91f423eaf04b62b1354796a089f04-953826043.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
