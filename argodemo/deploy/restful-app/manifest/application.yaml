@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/probaln/SSA.git
-    targetRevision: HEAD
+    targetRevision: develop
     path: argodemo/deploy/restful-app/manifest
   destination:
     server: https://kubernetes.default.svc
