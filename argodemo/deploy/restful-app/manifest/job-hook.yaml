@@ -47,24 +47,3 @@ spec:
           command: ["sleep", "2"]
       restartPolicy: Never
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Workflow                  # new type of k8s spec
-metadata:
-  generateName: hello-world-    # name of the workflow spec
-  namespace: argo
-  annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/sync-wave: "6"
-spec:
-  entrypoint: whalesay          # invoke the whalesay template
-  templates:
-  - name: whalesay              # name of the template
-    container:
-      image: docker/whalesay
-      command: [cowsay]
-      args: ["hello world"]
-      resources:                # limit the resources
-        limits:
-          memory: 32Mi
-          cpu: 100m
----
