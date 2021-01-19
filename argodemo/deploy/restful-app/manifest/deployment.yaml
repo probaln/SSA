@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: bookapp
-        image: docker.io/probaln/bookapp:v1
+        image: docker.io/probaln/bookapp:1.0.1
         imagePullPolicy: Always
 ---
