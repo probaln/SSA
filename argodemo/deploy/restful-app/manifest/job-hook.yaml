@@ -71,7 +71,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-initialization.sh 
           - name: cluster_url
-            value: http://a7e804fd14c90437899c831202d2cdca-1494831986.us-east-2.elb.amazonaws.com:8081
+            value: http://a0923bb25ef8a4132ab950517fc80003-1588755498.us-east-2.elb.amazonaws.com:8080
     - - name: AddABook
         template: test-book
         arguments:
@@ -79,7 +79,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-add.sh 
           - name: cluster_url
-            value: http://a7e804fd14c90437899c831202d2cdca-1494831986.us-east-2.elb.amazonaws.com:8081
+            value: http://a0923bb25ef8a4132ab950517fc80003-1588755498.us-east-2.elb.amazonaws.com:8080
     - - name: AlwaysFailStep
         template: test-book
         arguments:
@@ -87,7 +87,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-update.sh 
           - name: cluster_url
-            value: http://a7e804fd14c90437899c831202d2cdca-1494831986.us-east-2.elb.amazonaws.com:8081
+            value: http://a0923bb25ef8a4132ab950517fc80003-1588755498.us-east-2.elb.amazonaws.com:8080
     - - name: UpdateBook
         template: test-book
         arguments:
@@ -95,7 +95,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-patch.sh 
           - name: cluster_url
-            value: http://a7e804fd14c90437899c831202d2cdca-1494831986.us-east-2.elb.amazonaws.com:8081
+            value: http://a0923bb25ef8a4132ab950517fc80003-1588755498.us-east-2.elb.amazonaws.com:8080
     - - name: DeleteABook
         template: test-book
         arguments:
@@ -103,7 +103,7 @@ spec:
           - name:  test_script_name
             value: integ-test/test-delete.sh 
           - name: cluster_url
-            value: http://a7e804fd14c90437899c831202d2cdca-1494831986.us-east-2.elb.amazonaws.com:8081/
+            value: http://a0923bb25ef8a4132ab950517fc80003-1588755498.us-east-2.elb.amazonaws.com:8080
 
   - name: test-book
     inputs:
