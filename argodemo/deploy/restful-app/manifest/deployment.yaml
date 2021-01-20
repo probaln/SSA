@@ -24,12 +24,12 @@ spec:
           initialDelaySeconds: 45
           timeoutSeconds: 45
           httpGet:
-            path: /api/books
+            path: /actuator/health/liveness
             port: 8080
         readinessProbe:
           initialDelaySeconds: 45
           timeoutSeconds: 45
           httpGet:
-            path: /api/books
+            path: /actuator/health/readiness
             port: 8080
 ---
