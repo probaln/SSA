@@ -18,4 +18,17 @@ spec:
       - name: bookapp
         image: docker.io/probaln/bookapp:1.0.1
         imagePullPolicy: Always
+        - containerPort: 8080
+        livenessProbe:
+          initialDelaySeconds: 45
+          timeoutSeconds: 45
+          httpGet:
+            path: /
+            port: 8080
+        readinessProbe:
+          initialDelaySeconds: 45
+          timeoutSeconds: 45
+          httpGet:
+            path: /
+            port: 8080
 ---
