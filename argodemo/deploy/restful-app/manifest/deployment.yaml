@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bookapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: bookapp
@@ -24,12 +24,12 @@ spec:
           initialDelaySeconds: 45
           timeoutSeconds: 45
           httpGet:
-            path: /
+            path: /api/books
             port: 8080
         readinessProbe:
           initialDelaySeconds: 45
           timeoutSeconds: 45
           httpGet:
-            path: /
+            path: /api/books
             port: 8080
 ---
