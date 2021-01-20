@@ -18,6 +18,7 @@ spec:
       - name: bookapp
         image: docker.io/probaln/bookapp:1.0.1
         imagePullPolicy: Always
+        ports:
         - containerPort: 8080
         livenessProbe:
           initialDelaySeconds: 45
